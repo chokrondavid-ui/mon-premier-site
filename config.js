@@ -2,7 +2,7 @@
    Maison Orée — données modifiables du site
    --------------------------------------------------------------------------
    BRAND : informations de marque et règles de calcul
-   D     : décors (un décor = un motif dessiné par scene())
+   D     : décors (un décor = un motif dessiné par scene() : rameaux, jardin, horizon, foret, arches, montagnes)
    C     : coloris (applicables à tous les décors)
    M     : supports et prix TTC au m²
    Z     : tailles prédéfinies (largeur × hauteur en mètres)
@@ -22,8 +22,8 @@ const BRAND = {
 
 const D = [
   {
-    id: 'vercors', nom: 'Vercors', ref: 'MO-01', motif: 'montagnes', colorisDefaut: 'ivoire',
-    texte: "Quatre lignes de crêtes qui s'effacent dans la brume, du premier plan sombre au ciel pâle. Adapté aux murs larges, où la profondeur des plans se lit le mieux."
+    id: 'ramure', nom: 'Ramure', ref: 'MO-01', motif: 'rameaux', colorisDefaut: 'ivoire',
+    texte: "Des branches nues qui entrent par les bords du mur et se perdent dans un fond de brume patinée. Le centre reste clair : le décor encadre le mobilier sans le charger."
   },
   {
     id: 'serre', nom: 'Serre', ref: 'MO-02', motif: 'jardin', colorisDefaut: 'sauge',
