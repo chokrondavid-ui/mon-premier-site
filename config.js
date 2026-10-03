@@ -1,68 +1,61 @@
 /* ==========================================================================
    Maison Orée — données modifiables du site
    --------------------------------------------------------------------------
-   BRAND : informations de marque et règles de calcul
-   D     : décors (un décor = un motif dessiné par scene() : rameaux, jardin, horizon, foret, arches, montagnes)
-   C     : coloris (applicables à tous les décors)
-   M     : supports et prix TTC au m²
-   Z     : tailles prédéfinies (largeur × hauteur en mètres)
+   BRAND   : informations de marque
+   TAILLES : formats disponibles (largeur × hauteur en cm) et prix TTC,
+             livraison comprise
+   D       : décors (photos dans le dossier images/)
    ========================================================================== */
 
 const BRAND = {
   nom: 'Maison Orée',
-  signature: 'Papiers peints panoramiques sur mesure',
+  signature: 'Papiers peints panoramiques',
   // Laisser vide tant que l'adresse n'est pas créée : la ligne n'est pas affichée.
   email: '',
   devise: 'EUR',
-  surfaceMin: 4,       // m² — surface minimale facturée
-  largeurLe: 0.5,      // m — largeur d'un lé imprimé
-  margeHauteur: 0.1,   // m — marge de coupe ajoutée à la hauteur de chaque lé
-  limites: { lMin: 0.5, lMax: 20, hMin: 0.5, hMax: 5 } // m
+  margePose: 5 // cm ajoutés à la largeur et à la hauteur du mur par « Trouver ma taille »
 };
 
+/* Prix = coût fournisseur + 5 € de livraison, avec 30 % de marge minimum.
+   Coût fournisseur : 7,59 / 15,19 / 22,79 / 30,39 / 37,99 / 44,19 / 52,99 /
+   60,69 / 68,39 / 75,69 / 83,39 / 90,99 € */
+const TAILLES = [
+  { l: 140, h: 70,  prix: 17.99 },
+  { l: 200, h: 100, prix: 28.84 },
+  { l: 220, h: 140, prix: 39.70 },
+  { l: 250, h: 160, prix: 50.56 },
+  { l: 280, h: 180, prix: 61.41 },
+  { l: 300, h: 200, prix: 70.27 },
+  { l: 330, h: 210, prix: 82.84 },
+  { l: 360, h: 230, prix: 93.84 },
+  { l: 380, h: 240, prix: 104.84 },
+  { l: 400, h: 250, prix: 115.27 },
+  { l: 420, h: 260, prix: 126.27 },
+  { l: 440, h: 270, prix: 137.13 }
+];
+
+/* motif     : le décor à plat
+   cadrage   : point de l'image gardé au centre quand elle est recadrée
+   ambiances : photos du décor posé dans une pièce
+   tailles   : remplacer TAILLES par une liste propre au décor si besoin */
 const D = [
   {
-    id: 'ramure', nom: 'Ramure', ref: 'MO-01', motif: 'rameaux', colorisDefaut: 'ivoire',
-    texte: "Des branches nues qui entrent par les bords du mur et se perdent dans un fond de brume patinée. Le centre reste clair : le décor encadre le mobilier sans le charger."
+    id: 'ramure', nom: 'Ramure', ref: 'MO-01',
+    texte: "Des branches nues entrent par les bords du mur et se détachent sur un fond beige patiné, plus clair au centre. Le motif encadre le mur et laisse le milieu dégagé pour un canapé ou un meuble bas.",
+    motif: 'images/ramure-motif.jpg', cadrage: '50% 40%',
+    ambiances: [
+      { src: 'images/ramure-salon.jpg', legende: 'Ramure dans un salon' },
+      { src: 'images/ramure-meuble.jpg', legende: 'Ramure derrière un meuble bas' }
+    ],
+    tailles: TAILLES
   },
   {
-    id: 'serre', nom: 'Serre', ref: 'MO-02', motif: 'jardin', colorisDefaut: 'sauge',
-    texte: "De grandes feuilles dessinées à l'échelle du mur, sur un fond uni. Le motif est dense en partie basse et s'ouvre vers le haut, pour laisser respirer le plafond."
-  },
-  {
-    id: 'horizon', nom: 'Horizon', ref: 'MO-03', motif: 'horizon', colorisDefaut: 'brume',
-    texte: "Une mer calme, une ligne d'horizon basse et deux îles au loin. Un décor horizontal, pensé pour les pièces en longueur et les murs de tête de lit."
-  },
-  {
-    id: 'futaie', nom: 'Futaie', ref: 'MO-04', motif: 'foret', colorisDefaut: 'argile',
-    texte: "Des troncs droits répartis sur plusieurs plans, sans feuillage. Le rythme vertical du décor allonge visuellement la hauteur sous plafond."
-  },
-  {
-    id: 'arcades', nom: 'Arcades', ref: 'MO-05', motif: 'arches', colorisDefaut: 'nuit',
-    texte: "Une galerie d'arches ouverte sur un paysage de collines. Le décor le plus architectural de la collection, à placer face à une entrée ou au fond d'un couloir."
+    id: 'alize', nom: 'Alizé', ref: 'MO-02',
+    texte: "Des feuilles longues et translucides tombent du haut du mur sur un fond gris béton. Les tons vert, rose poudré et blanc restent doux, et la moitié basse du mur reste presque unie : la place d'une tête de lit ou d'une commode.",
+    motif: 'images/alize-motif.jpg', cadrage: '50% 30%',
+    ambiances: [
+      { src: 'images/alize-chambre.jpg', legende: 'Alizé dans une chambre' }
+    ],
+    tailles: TAILLES
   }
-];
-
-/* ciel : dégradé haut → bas ; plans : du plus lointain au plus proche */
-const C = [
-  { id: 'ivoire', nom: 'Ivoire', ciel: ['#f3ede1', '#e6dccb'], plans: ['#d8ccb7', '#c1b197', '#a39077', '#776753'], soleil: '#ecdcb6' },
-  { id: 'sauge',  nom: 'Sauge',  ciel: ['#eef0e6', '#d9dfcf'], plans: ['#c3cbb5', '#a2ad93', '#7d8a71', '#525d49'], soleil: '#e6e3c6' },
-  { id: 'argile', nom: 'Argile', ciel: ['#f4e7db', '#e6cfbc'], plans: ['#d6b39b', '#bc9377', '#987058', '#694a39'], soleil: '#f0d3b2' },
-  { id: 'brume',  nom: 'Brume',  ciel: ['#eaedef', '#d3d9dd'], plans: ['#bcc4ca', '#99a3ab', '#76818a', '#4f5962'], soleil: '#f1f0ea' },
-  { id: 'nuit',   nom: 'Nuit',   ciel: ['#3b3e44', '#26282c'], plans: ['#4b4c4d', '#3b3b3a', '#2d2c2a', '#1d1c1a'], soleil: '#b8a079' }
-];
-
-/* PRIX PROVISOIRES — à valider avant mise en ligne (TTC, au m²) */
-const M = [
-  { id: 'intisse', nom: 'Intissé mat',       prix: 65,  detail: 'Papier intissé, finition mate.' },
-  { id: 'texture', nom: 'Intissé texturé',   prix: 85,  detail: 'Intissé à léger relief, aspect toile.' },
-  { id: 'vinyle',  nom: 'Vinyle lessivable', prix: 95,  detail: "Surface vinyle, se nettoie à l'éponge humide." },
-  { id: 'toile',   nom: 'Toile tissée',      prix: 135, detail: 'Textile tissé contrecollé, rendu mat profond.' }
-];
-
-const Z = [
-  { id: 'pan',    nom: 'Pan de mur',    l: 2.5, h: 2.6 },
-  { id: 'sejour', nom: 'Mur de séjour', l: 3.5, h: 2.7 },
-  { id: 'grand',  nom: 'Grand mur',     l: 5,   h: 2.8 },
-  { id: 'hall',   nom: 'Hall, hôtel',   l: 8,   h: 3.2 }
 ];
