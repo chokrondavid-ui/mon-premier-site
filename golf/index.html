@@ -418,7 +418,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    Configurator
    ========================================================================== */
 .product { min-height: 100vh; padding: 14vh var(--gutter) 10vh; display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 4vw, 68px); align-items: center; }
-.cfg-stage { position: relative; aspect-ratio: 1.1; display: grid; place-items: center; border-radius: var(--radius-card); border: 1px dashed var(--color-rough); overflow: hidden; }
+.cfg-stage { position: relative; aspect-ratio: 1.1; display: grid; place-items: center; overflow: hidden; }
 .cfg-stage::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle closest-side at 55% 45%, color-mix(in srgb, var(--color-scorecard) 9%, transparent), transparent); }
 .cfg-stage .cart { width: 88%; position: relative; transition: transform .9s var(--ease-out); }
 .cfg-stage:hover .cart { transform: translateX(3%) rotate(-1deg); }
@@ -491,7 +491,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .anat-photo { position: relative; width: min(100%, calc(80vh * 605 / 763)); aspect-ratio: 605 / 763; margin-inline: auto; }
 .anat-photo::before { content: ""; position: absolute; inset: -12%; background: radial-gradient(circle closest-side at 55% 50%, color-mix(in srgb, var(--color-scorecard) 15%, transparent), transparent); pointer-events: none; }
 .anat-photo .ph { position: absolute; inset: 0; will-change: transform; transition: transform .9s var(--ease-out); }
-.anat-photo img { width: 100%; height: 100%; display: block; filter: brightness(1.35) contrast(1.05); clip-path: inset(100% 0 0 0); transition: clip-path 1.6s var(--ease-io); }
+.anat-photo img { width: 100%; height: 100%; display: block; position: relative; clip-path: inset(100% 0 0 0); transition: clip-path 1.6s var(--ease-io); }
 .anat-photo.in img { clip-path: inset(0 0 0 0); }
 .hot { position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: var(--color-scorecard); color: var(--color-clubhouse); font-size: 10px; display: grid; place-items: center; z-index: 2; transform: scale(0); transition: transform .7s var(--ease-out), background .3s, color .3s; }
 .anat-photo.in .hot { transform: scale(1); }
@@ -515,9 +515,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ========================================================================== */
 .cooler { position: relative; height: 220vh; }
 .cooler-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 4vw, 68px); align-items: center; padding: 80px var(--gutter) 40px; }
-.cooler-media { position: relative; height: min(76vh, 640px); border-radius: var(--radius-card); overflow: hidden; clip-path: circle(6% at 50% 50%); will-change: clip-path; }
+.cooler-media { position: relative; height: min(80vh, 680px); overflow: hidden; -webkit-mask: radial-gradient(closest-side, #000 58%, transparent 100%); mask: radial-gradient(closest-side, #000 58%, transparent 100%); clip-path: circle(6% at 50% 50%); will-change: clip-path; }
 .cooler-media img { width: 100%; height: 100%; object-fit: cover; display: block; will-change: transform; }
-.cooler-media .cup { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--color-rough); pointer-events: none; }
+.cooler-media .cup { display: none; }
 .cooler-copy { display: flex; flex-direction: column; gap: 22px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
 .chips li { border: 1px solid var(--color-rough); border-radius: var(--radius-ghost); padding: 7.5px 14px; font-size: 12px; display: inline-flex; gap: 8px; align-items: center; transition: border-color .3s, background .3s, transform .5s var(--ease-out); }
@@ -526,9 +526,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 .boot { padding: 12vh var(--gutter); }
 .boot-head { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-18); align-items: end; margin-bottom: 6vh; }
-.boot-media { position: relative; border-radius: var(--radius-card); overflow: hidden; aspect-ratio: 770 / 362; width: min(100%, 1100px, 150vh); margin-inline: auto; }
+.boot-media { position: relative; overflow: hidden; aspect-ratio: auto !important; height: min(70vh, 62vw); -webkit-mask: radial-gradient(closest-side, #000 62%, transparent 100%); mask: radial-gradient(closest-side, #000 62%, transparent 100%); aspect-ratio: 770 / 362; width: min(100%, 1100px, 150vh); margin-inline: auto; }
 .boot-media img { width: 100%; height: 118%; object-fit: cover; display: block; will-change: transform; }
-.boot-media .tag { position: absolute; left: 18px; bottom: 18px; background: color-mix(in srgb, var(--color-clubhouse) 75%, transparent); backdrop-filter: blur(8px); border-radius: var(--radius-ghost); padding: 8px 14px; font-size: 12px; }
+.boot-media .tag { position: absolute; left: 50%; transform: translateX(-50%); bottom: 12%; white-space: nowrap; background: color-mix(in srgb, var(--color-clubhouse) 75%, transparent); backdrop-filter: blur(8px); border-radius: var(--radius-ghost); padding: 8px 14px; font-size: 12px; }
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-18); margin-top: 5vh; counter-reset: st; }
 .step { border-top: 1px dashed var(--color-rough); padding-top: 18px; position: relative; }
 .step::before { counter-increment: st; content: "0" counter(st); font-size: 42px; line-height: 1; display: block; margin-bottom: 14px; }
@@ -546,7 +546,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .dim-fig { position: relative; margin: 0; --h: min(62vh, 560px); }
 .dim-fig.open { height: var(--h); aspect-ratio: 605 / 763; }
 .dim-fig.folded { height: calc(var(--h) * .819); aspect-ratio: 204 / 373; }
-.dim-fig img { width: 100%; height: 100%; display: block; filter: brightness(1.35); }
+.dim-fig img { width: 100%; height: 100%; display: block; position: relative; }
+.dim-fig::before, .anat-photo .ph::before, .cfg-stage .photo::before { content: ""; position: absolute; left: -12%; right: -12%; bottom: -5%; height: 22%; background: radial-gradient(ellipse closest-side, color-mix(in srgb, var(--color-scorecard) 13%, transparent), transparent); pointer-events: none; }
 .dim-fig svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .dim-fig figcaption { position: absolute; left: 0; top: -36px; font-size: 12px; color: var(--color-bunker); }
 .dl { stroke: var(--color-scorecard); stroke-width: 1.5; fill: none; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease-io); vector-effect: non-scaling-stroke; }
@@ -564,7 +565,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* Configurator photo + included list */
 .cfg-stage .photo { position: relative; width: 58%; height: auto; aspect-ratio: 605 / 763; transition: transform .9s var(--ease-out); will-change: transform; }
-.cfg-stage .photo img { width: 100%; height: 100%; display: block; filter: brightness(1.35) contrast(1.05); }
+.cfg-stage .photo img { width: 100%; height: 100%; display: block; position: relative; }
 .incl { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
 .incl li { border: 1px dashed var(--color-rough); border-radius: var(--radius-ghost); padding: 7.5px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; }
 .incl li::before { content: "✓"; font-size: 11px; }
@@ -841,7 +842,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   <a href="#story" class="hero-thumb" id="seeFold" data-cursor="Play">
     <span class="play"></span>
     <span class="label">See it fold</span>
-    <img class="mini-cart" src="img/cart-folded.webp" alt="" style="width:64px;right:10px;bottom:6px;filter:brightness(1.5)">
+    <img class="mini-cart" src="img/cart-folded.webp" alt="" style="width:64px;right:10px;bottom:6px">
   </a>
 
   <div class="scroll-cue" aria-hidden="true">Scroll<i></i></div>
@@ -1167,7 +1168,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ========================================================================== */
 const PRODUCT = {
   name: 'Fairline One',
-  price: 349,            // placeholder: confirm before launch
+  price: 290,
   currency: 'USD',
   colour: 'Black',
   specs: [
